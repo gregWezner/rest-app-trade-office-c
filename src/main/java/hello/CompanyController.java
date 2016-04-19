@@ -26,7 +26,7 @@ public class CompanyController {
 
     @RequestMapping("/read/symbol")
     public Company readBySymbol(@RequestParam String name) {
-        return companyByName.get(name);
+        return companyBySymbol.get(name);
     }
 
     @RequestMapping("/getFirst")
