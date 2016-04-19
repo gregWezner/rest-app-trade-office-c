@@ -1,9 +1,8 @@
 package hello;
 
-/**
- * Created by grzegorzweznerowicz on 19.04.2016.
- */
-public class Company {
+import java.io.Serializable;
+
+public class Company implements Serializable{
     private String symbol;
     private String name;
     private String exchange;
