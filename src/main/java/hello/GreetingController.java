@@ -1,13 +1,13 @@
 package hello;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class GreetingController {
@@ -17,9 +17,7 @@ public class GreetingController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public HttpStatus save(@RequestBody Company company) throws IOException {
-
-        FileOutputStream fout = new FileOutputStream("output.ser");
-
+        FileOutputStream fout = new FileOutputStream("~/output.ser");
         try (ObjectOutputStream oos = new ObjectOutputStream(fout)) {
             oos.writeObject(company);
         }
@@ -27,15 +25,11 @@ public class GreetingController {
     }
 
     @RequestMapping("/read")
-    public Greeting read() throws IOException {
-
-        Path path = Paths.get("output.js");
-        String val;
-        try (BufferedReader reader = Files.newBufferedReader(path)) {
-            val = String.format(template, reader.readLine());
+    public Company read() throws IOException, ClassNotFoundException {
+        FileInputStream fin = new FileInputStream("~/output.ser");
+        try (ObjectInputStream reader = new ObjectInputStream(fin)) {
+            return (Company) reader.readObject();
         }
-        return new Greeting(counter.incrementAndGet(),
-                val);
     }
 
 }
