@@ -29,4 +29,9 @@ public class CompanyController {
         return companyByName.get(name);
     }
 
+    @RequestMapping("/getFirst")
+    public Company getFirst() {
+        return companyByName.entrySet().iterator().next().getValue();
+    }
+
 }
