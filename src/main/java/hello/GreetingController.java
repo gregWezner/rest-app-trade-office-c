@@ -17,7 +17,7 @@ public class GreetingController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public HttpStatus save(@RequestBody Company company) throws IOException {
-        FileOutputStream fout = new FileOutputStream("/build/output.ser");
+        FileOutputStream fout = new FileOutputStream("output.ser");
         try (ObjectOutputStream oos = new ObjectOutputStream(fout)) {
             oos.writeObject(company);
         }
@@ -26,7 +26,7 @@ public class GreetingController {
 
     @RequestMapping("/read")
     public Company read() throws IOException, ClassNotFoundException {
-        FileInputStream fin = new FileInputStream("/build/output.ser");
+        FileInputStream fin = new FileInputStream("output.ser");
         try (ObjectInputStream reader = new ObjectInputStream(fin)) {
             return (Company) reader.readObject();
         }
